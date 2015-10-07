@@ -38,14 +38,26 @@ int main()
 
   cout << A[-1] << endl;
   cout << A[1] << endl;
+  cout << A[0] << endl;
 
   Array<int> B(5, 0);
-  B = A;
+  //B = A;
 
-  cout << B[-1] << endl;
+  B[2] = 10;
+  B[1] = 11;
+  B[0] = 12;
+
+  cout << B[2] << endl;
   cout << B[1] << endl;
   cout << B[0] << endl;
+
+  Array<int> C(5, 0);
+
+  C[2] = 2;
+  cout << C[2];
+
   }
+  
   catch(Exception &a)
   {
 	  cerr << "Error: " << a.getMessage() << endl;
