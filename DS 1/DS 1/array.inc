@@ -33,14 +33,13 @@ Array<T>::Array(int length, int start_index) :
   m_start_index(start_index)
 {
   
-  setLength(m_length);
+  m_array = ( new T[m_length] );
 
   if(m_length < 1)
   {
 	  throw Exception("Array length is too small");
   }
 
-  
 }
 
 template <class T>
@@ -86,6 +85,40 @@ T &Array<T>::operator [](int idx)
 	throw Exception("Index is too high");
   }
 
+  if(m_start_index < 0)
+  {
+	idx = (idx - m_start_index);
+	return m_array[idx];
+  }
+
+  if(m_start_index > 0)
+  {
+    idx = (idx + m_start_index);
+	return m_array[idx];
+  }
+    
+   /*if(m_start_index < 0 && idx > 0)
+   {
+	  idx = (idx - m_start_index) + 1;
+   }
+
+   if(idx == m_start_index)
+   {
+	   idx = 0;
+	   return m_array[idx];
+   }
+  
+  if(m_start_index < 0 && idx == 0)
+  {
+    idx = (idx - m_start_index) + 1;
+  }
+
+  if(idx < 0)
+  {
+	  idx = ((m_start_index - m_start_index) - idx);
+  }*/
+
+ 
   return m_array[idx];
 
 }
@@ -99,7 +132,25 @@ void Array<T>::setStartIndex(int index)
 template <class T>
 void Array<T>::setLength(int length)
 {
+  
   m_length = length;
-  m_array = ( new T[m_length] );
+
+  T *t_array = ( new T[m_length] );
+
+  for(int i = m_start_index; i < (m_start_index + m_length); ++i)
+  {
+    t_array[i] = m_array[i];
+  }
+
+  delete [] m_array;
+
+  m_array =  new T[m_length];
+
+  for(int i = m_start_index; i < (m_start_index + m_length); ++i)
+  {
+    m_array[i] = t_array[i];
+  }
+
+  delete [] t_array;
   
 }

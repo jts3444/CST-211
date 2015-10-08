@@ -43,7 +43,6 @@ class Array
     T *m_array;
     int m_length;
     int m_start_index;
-	//void check(int idx) const;
 
 };
 

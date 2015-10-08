@@ -33,35 +33,44 @@ int main()
   {
   Array<int> A(5, -2);
   A[-1] = 4;
-  A[1] = 9;
+  A[-2] = 9;
   A[0] = 33;
 
-  cout << A[-1] << endl;
-  cout << A[1] << endl;
-  cout << A[0] << endl;
+  cout << "Should equal 4: " << A[-1] << endl;
+  cout << "Should equal 9: " << A[-2] << endl;
+  cout << "Should equal 33: " << A[0] << endl;
 
   Array<int> B(5, 0);
-  //B = A;
+  B = A;
 
-  B[2] = 10;
-  B[1] = 11;
-  B[0] = 12;
+  B[1] = 10;
+  B[2] = 11;
 
-  cout << B[2] << endl;
-  cout << B[1] << endl;
-  cout << B[0] << endl;
+  cout << "Should equal 9: " << B[-2] << endl;
+  cout << "Should equal 4: " << B[-1] << endl;
+  cout << "Should equal 33: " << B[0] << endl;
+  cout << "Should equal 10: " << B[1] << endl;
+  cout << "Should equal 11: " << B[2] << endl;
+
+  B.setLength(3);
+
+  cout << "Should equal 9: " << B[-2] << endl;
+  cout << "Should equal 4: " << B[-1] << endl;
+  cout << "Should equal 33: " << B[0] << endl;
+  cout << "Shouldn't have a valid value: " << B[1] << endl;
+  cout << "Shouldn't have a valid value: " << B[2] << endl;
+  
 
   Array<int> C(5, 0);
 
   C[2] = 2;
-  cout << C[2];
+  cout << "Should equal 2: " << C[2] << endl;
 
   }
   
   catch(Exception &a)
   {
 	  cerr << "Error: " << a.getMessage() << endl;
-	
   }
 
   return 0;
