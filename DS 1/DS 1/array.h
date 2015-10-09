@@ -1,7 +1,7 @@
 /****************************************************************
 * Author:				Jason Schmidt
 * Date Created:			10/3/15
-* Last Modification Date: 10/3/15
+* Last Modification Date: 10/9/15
 * Filename:				array.h
 *
 * Overview:  Provides the function declarations for the array class 
@@ -28,49 +28,46 @@ template<class T>
 class Array
 {
   public:
+	// default constructor
     Array();
+
+	// constructor that takes length and start_index
+	// sets start_index to 0 if none is provided.
     Array(int length, int start_index = 0);
+
+	// copy constructor
     Array(const Array<T> &rhs);
+
+	// deconstructor
     ~Array();
+
+	// operator overload for =
     Array <T> &operator =(const Array &rhs);
+
+	// operator overload for []
     T &operator [](int idx);
+
+	// gets the starting index, and returns it 
 	int getStartIndex() const {return m_start_index;}
+
+	//  allows the user to set the starting index
     void setStartIndex(int index);
+
+	//  gets the length of the array
 	int getLength() const {return m_length;}
+
+	// sets the length of the array
     void setLength(int length);
 
   private:
-    T *m_array;
-    int m_length;
-    int m_start_index;
+    T *m_array;			//  Array of type specified in driver file
+    int m_length;		//  length of the array
+    int m_start_index;	//  starting index of the array
 
-};
-
-
-class Exception
-{
-
-  friend ostream &operator<<(ostream &os, const Exception &rhs);
-
-  public:
-    Exception();
-    Exception(char *msg);
-    Exception(const Exception &rhs);
-    ~Exception();
-	Exception &operator=(const Exception &rhs);
-	const char* getMessage() {return m_msg;}
-    void setMessage(char *msg);
-    //operator <<(in stream : ostream &, in except : const Exception &) : ostream &;
-
-  private:
-    char* m_msg;
 };
 
 #include "array.inc"
 
 #endif
 
-// if given index is less than starting index it's out of bounds
-// if index given is equal to or more than the starting index + length
-// in bracket operator
-// if index is -4 and length is 5, it would go -4, -3, -2, -1, 0.  Need to account for that in the bracket operator
+

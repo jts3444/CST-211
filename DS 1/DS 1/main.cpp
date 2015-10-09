@@ -1,7 +1,7 @@
 /******************************************************************************
 * Author:				Jason Schmidt
 * Date Created:			10/3/15
-* Last Modification Date: 10/3/15
+* Last Modification Date: 10/9/15
 * Filename:				main.cpp
 *
 * Overview:  The main program is linked to the array and exception classes.  
@@ -13,8 +13,8 @@
 *		   
 *	 	
 *		
-* Output:  
-*		   	
+* Output:  Array creation, element setting, and output.  Shows use of =operator
+*		   shrinking and enlarging array.  Has error message at the end.
 *		    
 *		 		 
 *******************************************************************************/
@@ -22,6 +22,7 @@
 
 
 #include "array.h"
+#include "Exception.h"
 #include <iostream>
 
 
@@ -31,40 +32,66 @@ int main()
 {
   try
   {
-  Array<int> A(5, -2);
-  A[-1] = 4;
-  A[-2] = 9;
-  A[0] = 33;
+	//  Creates array of integers, A
+    Array<int> A(5, -2);
+    A[-1] = 4;
+    A[-2] = 9;
+    A[0] = 33;
 
-  cout << "Should equal 4: " << A[-1] << endl;
-  cout << "Should equal 9: " << A[-2] << endl;
-  cout << "Should equal 33: " << A[0] << endl;
+	//  Showing that the array elements set correctly
+    cout << "Should equal 4: " << A[-1] << endl;
+    cout << "Should equal 9: " << A[-2] << endl;
+    cout << "Should equal 33: " << A[0] << endl << endl;
 
-  Array<int> B(5, 0);
-  B = A;
+	//  Creates integer array, B
+    Array<int> B(5, 0);
 
-  B[1] = 10;
-  B[2] = 11;
+	//  Sets B array equal to A
+    B = A;
 
-  cout << "Should equal 9: " << B[-2] << endl;
-  cout << "Should equal 4: " << B[-1] << endl;
-  cout << "Should equal 33: " << B[0] << endl;
-  cout << "Should equal 10: " << B[1] << endl;
-  cout << "Should equal 11: " << B[2] << endl;
+	//  Filling B array
+    B[1] = 10;
+    B[2] = 11;
 
-  B.setLength(3);
+    //  Showing the contents of B, the first three are inputs copied from A
+    cout << "Should equal 9: " << B[-2] << endl;
+    cout << "Should equal 4: " << B[-1] << endl;
+    cout << "Should equal 33: " << B[0] << endl;
+    cout << "Should equal 10: " << B[1] << endl;
+    cout << "Should equal 11: " << B[2] << endl << endl;
 
-  cout << "Should equal 9: " << B[-2] << endl;
-  cout << "Should equal 4: " << B[-1] << endl;
-  cout << "Should equal 33: " << B[0] << endl;
-  cout << "Shouldn't have a valid value: " << B[1] << endl;
-  cout << "Shouldn't have a valid value: " << B[2] << endl;
-  
+	//  Shrinks B from 5 to 3 elements
+    B.setLength(3);
 
-  Array<int> C(5, 0);
+	//  Outputs the shrunken array
+    cout << "Should equal 9: " << B[-2] << endl;
+    cout << "Should equal 4: " << B[-1] << endl;
+    cout << "Should equal 33: " << B[0] << endl << endl;
 
-  C[2] = 2;
-  cout << "Should equal 2: " << C[2] << endl;
+	//  Creating array C
+    Array<int> C(5, 0);
+
+	//  Setting element equal to 2
+    C[2] = 2;
+
+	//  Outputs the element from C
+    cout << "Should equal 2: " << C[2] << endl << endl;
+
+    //  Making C a bigger array
+	C.setLength(7);
+
+	//  Making sure the bigger array can allocate to new length
+    C[6] = 99;
+
+	//  
+    cout << "Should equal 2: " << C[2] << endl;
+    cout << "Should equal 99: " << C[6] << endl << endl;
+
+	/*  Uncomment to test if index is too high
+    C[7];*/
+
+	//  Tests if index is too low, will throw Exception message
+	C[-2];
 
   }
   

@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="array.h" />
+    <ClInclude Include="Exception.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="array.inc" />

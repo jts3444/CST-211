@@ -26,6 +26,9 @@
     <ClInclude Include="array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="array.inc">
