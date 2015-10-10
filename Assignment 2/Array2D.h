@@ -1,7 +1,7 @@
 /****************************************************************
 * Author:				Jason Schmidt
 * Date Created:			10/3/15
-* Last Modification Date: 10/3/15
+* Last Modification Date: 10/10/15
 * Filename:				Array2D.h
 *
 * Overview:  Provides the function declarations for the Array2D  
@@ -61,13 +61,14 @@ class Array2D
   //  Sets the column
   void setColumn(int col);
 
+  //  Selects an element of a 2D array
   T& Select(int row, int col);
 
   private:
 
-  T **m_array;
-  int m_row;
-  int m_col;
+  T **m_array;     // 2D array variable
+  int m_row;	   // row variable
+  int m_col;      //  column variable
   
 };
 

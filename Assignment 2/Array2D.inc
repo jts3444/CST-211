@@ -35,18 +35,20 @@ using namespace std;
 ***************************************************************/
 template <class T>
 Array2D<T>::Array2D(int row, int col) : 
-  m_row(row),
-  m_col(col)
+  m_row(row),  //  instantiates m_row to row value passed in
+  m_col(col)  //  instantiates m_col to col value passed in
 {
   
-
-  if(m_row < 0 || m_col < 0)
+  //  If the row or column is less than 0, exception thrown
+  if(m_row < 0 || m_col < 0)  
   {
 	  throw Exception("Array length is too small");
   }
 
+  //  Creates the row part of the array
   m_array = ( new T*[m_row] );
 
+  //  loops through the row, creating a column for each row
   for(int i = 0; i < m_row; i ++)
 	  m_array[i] = new T[m_col];
    
@@ -64,13 +66,16 @@ Array2D<T>::Array2D(int row, int col) :
 template <class T>
 Array2D<T>::~Array2D()
 {
+  //  If there is an array object, it deletes
   if(m_array != NULL)
   {
+	//  goes through each row, deleting elements within
 	for(int i = 0; i < m_row; i++)
     {
       delete [] m_array[i];
 	}
 
+	//  deletes the remainder
     delete [] m_array;
   }
 }
@@ -88,24 +93,30 @@ Array2D<T>::~Array2D()
 template <class T>
 Array2D<T> &Array2D<T>::operator =(const Array2D &rhs)
 {
+  //  Performs a self check
   if (this == &rhs)
     return *this;
 
+  //  Delete the row elements
   for(int i = 0; i < m_row; i++)
   {
     delete [] m_array[i];
   }
 
+  //  Deletes the rest of the array
   delete [] m_array;
   
-  m_row = rhs.m_row;
-  m_col = rhs.m_col;
+  m_row = rhs.m_row;  //  Sets the row to new row length
+  m_col = rhs.m_col;  //  Sets the col to new col length
   
-  m_array = ( new T*[m_row] );
+  //  Creates new array with new row amount
+  m_array = ( new T*[m_row] );  
 
+  //  Loops through the rows and creates columns
   for(int i = 0; i < m_row; i++)
 	  m_array[i] = new T[m_col];
 
+  //  Copies the contents of one array into the other
   for(int i = 0; i < m_row; i++)
   {
 	  for(int idx = 0; idx < m_col; idx++)
@@ -130,13 +141,15 @@ Array2D<T> &Array2D<T>::operator =(const Array2D &rhs)
 template <class T>
 Row<T> Array2D<T>::operator [](int idx)
 {
-
+  //  Checks index values, if they're too high, throws exception
   if(idx >= (m_row) || idx >=(m_col))
   {
 	throw Exception("Index is too high");
   }
 
+  //  Creates an element
   Row<T> element(*this, idx);
+  
   return element;
 
 }
@@ -153,7 +166,53 @@ Row<T> Array2D<T>::operator [](int idx)
 template <class T>
 void Array2D<T>::setColumn(int col)
 {
-  m_col = index;
+  //  Creates temporary 2D array
+  T **c_array = ( new T*[col] );
+
+  //  Finishes the creation process for temporary array
+  for(int i = 0; i < col; i++)
+	  c_array[i] = new T[m_col];
+
+  //  Copies the contents of one array into the other
+  //  If the new column is less than the old it only 
+  //  loops through the smaller amount
+  if(col < m_col)
+  {
+    for(int i = 0; i < col; i++)
+    {
+	  for(int idx = 0; idx < m_row; idx++)
+	  {
+		  c_array[i][idx] = m_array[i][idx];
+	  }
+    }
+  }
+
+  //  If the new column is greater than the old
+  //  It only loops through the old column value
+  if(col > m_col)
+  {
+	for(int i = 0; i < m_col; i++)
+    {
+	  for(int idx = 0; idx < m_row; idx++)
+	  {
+		  c_array[i][idx] = m_array[i][idx];
+	  }
+    }
+  }
+
+  //  Deletes the old array
+  for(int i = 0; i < m_row; i++)
+    {
+      delete [] m_array[i];
+	}
+
+	//  deletes the remainder
+    delete [] m_array;
+
+	//  Sets the array equal to the temporary one
+	m_array = c_array;
+
+  m_col = col;  
 }
 
 
@@ -168,7 +227,55 @@ void Array2D<T>::setColumn(int col)
 template <class T>
 void Array2D<T>::setRow(int row)
 {
-  m_row = length; 
+  //  Creates temporary row array
+  T **r_array = ( new T*[row] );
+
+  //  Finishes the creation of the 2D temp array
+  for(int i = 0; i < row; i++)
+	  r_array[i] = new T[m_col];
+
+  //  Copies the contents of one array into the other
+  //  If the new row value is less, it loops through
+  //  the smaller amount
+   if(row < m_row)
+  {
+    for(int i = 0; i < row; i++)
+    {
+	  for(int idx = 0; idx < m_col; idx++)
+	  {
+		  r_array[i][idx] = m_array[i][idx];
+	  }
+    }
+  }
+
+  //  If the new row amount is greater it only
+  //  loops through the older value
+  if(row > m_row)
+  {
+	for(int i = 0; i < m_row; i++)
+    {
+	  for(int idx = 0; idx < m_col; idx++)
+	  {
+		  r_array[i][idx] = m_array[i][idx];
+	  }
+    }
+  }
+
+  //  Deletes old array
+  for(int i = 0; i < m_col; i++)
+    {
+      delete [] m_array[i];
+	}
+
+	//  deletes the remainder
+    delete [] m_array;
+
+	//  Sets array equal to temp array
+	m_array = r_array;
+
+  //  Creates new array with new row amount
+  
+    m_row = row; 
 }
 
 
@@ -183,6 +290,7 @@ void Array2D<T>::setRow(int row)
 template <class T>
 T& Array2D<T>::Select(int row, int col)
 {
+	//  Returns a selection within the 2D array
 	return m_array[row][col];
 
 }
